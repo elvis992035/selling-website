@@ -5,7 +5,7 @@ const dataSchema = require('../modal/dataModal');
 const router = express.Router();
 
 
-// getting localhost://4000/data
+// getting localhost://2000/data
 
 router.get('/data', (req, res) => {
 
@@ -43,9 +43,7 @@ router.post("/data", (req, res) => {
   }))
 
   .catch(
-
     error => {res.json({error})}
-
   )
 });
 

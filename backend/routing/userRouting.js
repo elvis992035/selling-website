@@ -1,52 +1,106 @@
 const express = require('express');
+const bcrypt = require("bcrypt");
+//const jwt = require("jsonwebtoken");
 
-const dataSchema = require('../modal/userModal');
+const userSchema = require('../modal/userModal');
 
 const router = express.Router();
 
 
-// getting localhost://4000/data
+// signup localhost://2000/signup
 
-router.get('/user', (req, res) => {
+router.post('/signup', (req, res) => {
 
-  const dataFind = dataSchema.find();
+    bcrypt.hash(req.body.password, 10)
 
-  dataFind.then(doc => {
+    .then( hash => {
+        const user = new userSchema ({
+            email: req.body.email, 
+            password: hash, 
+            firstName: req.body.firstName,
+            lastName: req.body.lastName
+        })
 
-    res.json({
+        user.save()
+        .then( result => {
+            res.json({
+                message: "the user has been created",
+                result: result
+            });            
+        })
 
-      message: "successfully pulled",
-      data:doc
-
-    })
-  })
+        .catch( err => {
+            res.json({ error: err });
+        });
+    }) 
 })
 
-//  posting
+//  sign in (localhost:2000/login) 
 
-router.post("/user", (req, res) => {
+router.post("login", (req, res) => {
 
-  // create new data
+    let findUser;
 
-  const data = new dataSchema ({
+    // mongodb search
 
-    name: req.body.name,
-    age: req.body.age
+    userSchema.findOne({ email: req.body.email})
 
-  });
+       .then( user => {
+           if (!user){
+               return res.json({
+                   message: "User Not Found"
+               });
+           }
 
-  // save it
+           findUser = user;
 
-  data.save().then(response => res.json({
-    message: "success",
-    res: response
-  }))
+           // compares the password thats inputed to the stored PW
 
-  .catch(
+           return bcrypt.compare( req.body.password, user.password)
 
-    error => {res.json({error})}
+       })
+       .then( result => {
+           if (!result) {
+               return res.json ({
+                   message: " Auth Failed "
+               });
+           }
 
-  )
-});
+           const token = jwt.sign (
+
+            // the auto generated _id from the collection in mongoDB
+
+            { email: findUser.email, userId: findUser._id }, 
+
+            "secret_longer",
+
+            { expiresIn: "1h" }
+
+           );
+
+           const firstName = findUser.firstName;
+           const lastName = findUser.lastName;
+
+           res.json ({
+               firstName,
+               lastName,
+               token,
+               expiresIn: 10000
+           });
+       })
+       
+       .catch ( err => { console.log (err) })
+})
+
+// get information 
+
+router.get('/info', (req, res) => {
+    userSchema.find({})
+        .then( data => {
+            res.json({
+                data
+            })
+        })
+})
 
 module.exports = router;
