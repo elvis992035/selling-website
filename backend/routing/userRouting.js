@@ -1,6 +1,6 @@
 const express = require('express');
 const bcrypt = require("bcrypt");
-//const jwt = require("jsonwebtoken");
+const jwt = require("jsonwebtoken");
 
 const userSchema = require('../modal/userModal');
 
@@ -37,7 +37,7 @@ router.post('/signup', (req, res) => {
 
 //  sign in (localhost:2000/login) 
 
-router.post("login", (req, res) => {
+router.post("/login", (req, res) => {
 
     let findUser;
 

@@ -1,20 +1,17 @@
 import React, { Component } from 'react';
-import { Route, Switch } from 'react-router-dom';
-import logo from './logo.svg';
+import { Route } from 'react-router-dom';
 import './App.css';
+
+import Login from './containers/Login/Login';
 
 class App extends Component {
   render () {
-    return (
-      <div>
+    return (        
+      <div>   
         
-          <Switch>
-            {/* <Route path="/checkout" component={Checkout} />
-            <Route path="/orders" component={Orders} /> */}
-            <Route path="/" exact component={BurgerBuilder} />
-          </Switch>
+        <Route path = "/" exact component = { Login }/>
         
-      </div>
+      </div>     
     );
   }
 }
