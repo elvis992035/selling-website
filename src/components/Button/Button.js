@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 
-class Input extends Component {
+class Button extends Component {
     render() {
         return (
             <div>
-                <input type = "text" placeholder = {this.props.placeholder} />
+                <button type = "submit"> Log in </button>
             </div>
         );
     }
 }
 
-export default Input;
+export default Button;
