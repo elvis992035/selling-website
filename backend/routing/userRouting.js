@@ -19,7 +19,7 @@ router.post('/signup', (req, res) => {
             password: hash, 
             firstName: req.body.firstName,
             lastName: req.body.lastName
-        })
+        });
 
         user.save()
         .then( result => {
@@ -32,8 +32,8 @@ router.post('/signup', (req, res) => {
         .catch( err => {
             res.json({ error: err });
         });
-    }) 
-})
+    }); 
+});
 
 //  sign in (localhost:2000/login) 
 
@@ -45,11 +45,9 @@ router.post("/login", (req, res) => {
 
     userSchema.findOne({ email: req.body.email})
 
-       .then( user => {
+       .then (user => {
            if (!user){
-               return res.json({
-                   message: "User Not Found"
-               });
+               return res.status(404).json({email: "User Not Found"});
            }
 
            findUser = user;
@@ -59,11 +57,9 @@ router.post("/login", (req, res) => {
            return bcrypt.compare( req.body.password, user.password)
 
        })
-       .then( result => {
+       .then (result => {
            if (!result) {
-               return res.json ({
-                   message: " Auth Failed "
-               });
+               return res.status(401).json({password: "Password worng"});
            }
 
            const token = jwt.sign (

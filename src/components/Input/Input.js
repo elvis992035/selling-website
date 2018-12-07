@@ -4,7 +4,8 @@ class Input extends Component {
     render() {
         return (
             <div>
-                <input type = "text" placeholder = {this.props.placeholder} />
+                <input type = "text" placeholder = {this.props.placeholder} 
+                name = {this.props.name} onChange = {this.props.onChange} />
             </div>
         );
     }

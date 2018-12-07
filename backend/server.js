@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
+const cors = require('cors');
 
 const path = 2000;
 
@@ -12,7 +13,7 @@ const userRouter = require('./routing/userRouting.js');
 //  middleware
 
 app.use(express.json());
-// app.use(cors());
+app.use(cors());
 
 mongoose.connect(
 
