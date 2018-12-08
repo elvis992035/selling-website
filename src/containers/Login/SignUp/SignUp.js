@@ -26,7 +26,9 @@ class SignUp extends Component {
       signupHandler = (e) => {
         this.setState({
           [e.target.name] : e.target.value
+          
         })
+        console.log(e.target.name + ":" + e.target.value);
       }
 
       signupSubmit = (e) => {
@@ -41,7 +43,7 @@ class SignUp extends Component {
         }
 
         axios.post(`http://localhost:2000/signup`, newUser)
-          .then(res => console.log(res))
+          .then(res => {console.log(res); this.props.history.push('/')})
           .catch(err => console.log(err));
 
       }

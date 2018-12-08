@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 
-// import classes from './Logo.css';
+import './Logo.css';
 
 class Logo extends Component {
     render() {
         return (
-            <div> JOOLE </div>
+            <div className = "logo"> JOOLE </div>
         );
     }
 }

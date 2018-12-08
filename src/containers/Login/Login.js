@@ -25,7 +25,11 @@ class Login extends Component {
         }
 
         axios.post('http://localhost:2000/login', user)
-        .then(res => ( console.log(res.data.token)))
+        .then(res => {
+            localStorage.setItem('usertoken', JSON.stringify(res.data));
+            this.props.history.push('/main');
+        })
+
         .catch(err => console.log(err));
 
       }
@@ -40,9 +44,13 @@ class Login extends Component {
 
             <div className = "loginWrapper">
 
-               <Link to = "/signup" > Sign Up </Link>
+               <div className = "Signup">
+                   <Link to = "/signup" > Sign Up </Link>
+               </div>
 
-               <Logo />
+               <div>  
+                   <Logo />
+               </div>
 
                <br/>
 
