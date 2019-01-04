@@ -5,7 +5,7 @@ import './Logo.css';
 class Logo extends Component {
     render() {
         return (
-            <div className = "logo"> JOOLE </div>
+            <div className = "logo"> <img src = "../../assets/JLogo.png" alt = "logo"></img> </div>
         );
     }
 }

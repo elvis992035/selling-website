@@ -50,14 +50,11 @@ class Login extends Component {
 
                <div>  
                    <Logo />
+                   <img src = "../../assets/JLogo.png" alt = "logo"></img>
                </div>
-
                <br/>
-
                <div> Building Product Selection Playform </div>
-
                <br/>
-
                <form>
 
                <Input placeholder = "Email" name = "email" onChange = {this.inputHandler} />
